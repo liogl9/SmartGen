@@ -1,0 +1,67 @@
+version: "3"
+
+services:
+  influxdb:
+    image: influxdb
+    container_name: influxdb_2
+    restart: always
+    environment:
+      - INFLUXDB_DB=influxdb_2
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=admin123
+    volumes:
+      - influxdb:/var/lib/influxdb
+    ports:
+      - "8086:8086"
+    networks:
+      - mynetwork
+
+  flask:
+    build: ./app
+    container_name: flask
+    restart: always
+    volumes:
+      - ./app:/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - influxdb
+    networks:
+      - mynetwork
+
+  smartgen:
+    build: ./smartgen
+    container_name: smartgen
+    restart: always
+    volumes:
+      - ./smartgen:/app
+    depends_on:
+      - influxdb
+    networks:
+      - mynetwork
+
+  reedata:
+    build: ./reedata
+    container_name: reedata
+    restart: always
+    volumes:
+      - ./reedata:/app
+    networks:
+      - mynetwork
+
+  waterpred:
+    build: ./waterpred
+    container_name: waterpred
+    restart: always
+    volumes:
+      - ./waterpred:/app
+    depends_on:
+      - influxdb
+    networks:
+      - mynetwork
+
+volumes:
+  influxdb:
+
+networks:
+  mynetwork:
