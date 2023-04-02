@@ -1,3 +1,4 @@
-torch
-sklearn
-influxdb
+scikit-learn
+influxdb_client
+requests
+pandas

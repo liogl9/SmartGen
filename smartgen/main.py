@@ -7,9 +7,9 @@ import json
 
 bucket = "timeSeries"
 org = "TeamSocket"
-token = "KnozwwefZRA5450uPDbBfYNO75B16kSaPZ3do02a5AhrL6lK7wM1oq0myJ2AUhg2TO9IgaP17RrJIuNFu74WcQ=="
+token = "SmXEw_WZ_IbC12fejxEQ850vLXneR_ChiR0orjx--uJgXrFf3RpSBlGRHlGrEg3aMkklrTTjhu4i-3dKpc2grw=="
 # Store the URL of your InfluxDB instance
-url = "http://localhost:8086"
+url = "http://172.18.0.2:8086"
 
 centrales = {
     "Alc": {
@@ -164,7 +164,7 @@ def SmartGen():
             last_pred_time = now
             pred = 0
 
-        with open("./monitor/centrales.json", "w") as outfile:
+        with open("./centrales.json", "w") as outfile:
             json.dump(centrales, outfile)
 
         time.sleep(5)

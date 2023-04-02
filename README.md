@@ -3,8 +3,6 @@
 Este repositorio consiste en el sistema de gestión eficiente propuesto por Socket Team.
 Consta de los siguientes microservicios y sus localizaciones.
 
-Dentro de cada servicio se detalla el funcionamiento del mismo, a continuación se expone el funcionamiento general del sistema.
-
 ## Base de datos del sistema (influxDB)
 
 Este servicio consta de una base de datos construida en InfluxDB por su capacidad de almacenar series temporales.
@@ -44,4 +42,14 @@ Como el sistema de consulta de precipitaciones no está operativo se simula como
 
 Este servicio consta de un servidor web que exponga los resultados del servicio SmartGen, los cuales se almacenan en el directorio monitor en forma de archivo JSON.
 
-##
+## DEmo
+
+Leer readme de influxdb
+
+Ejecutar el archivo docker compose
+
+Ejecutar en writeinfluxdb.py del contenedor de waterpred.
+
+Comprobar que en el contenedor smartgen se ha generado el archivo de centrales.json con que central genera y cual no.
+
+Actualmente no está disponible el servicio de monitorización.

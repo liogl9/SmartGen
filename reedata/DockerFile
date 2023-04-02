@@ -1,20 +1,32 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9-slim-buster
+FROM python:3.9-slim
 
-# Set the working directory to /app
-WORKDIR /app
+# RUN echo "hello world"
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# # Set the working directory to /app
+WORKDIR /reedata
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+# RUN pwd
+# # Copy the current directory contents into the container at /app
+COPY . ./reedata
 
-# Make port 81 available to the world outside this container
-EXPOSE 81
+# # # Install any needed packages specified in requirements.txt
+RUN pip install --trusted-host pypi.python.org -r ./reedata/requirements.txt
 
-# Define environment variable
+# # # Make port 80 available to the world outside this container
+EXPOSE 8082
+
+# # # Define environment variable
 ENV NAME World
 
-# Run app.py when the container launches
-CMD ["python", "getREEdata.py"]
+# Fill the database
+# RUN python ./reedata/writeInfluxDB.py
+
+RUN mkdir gen_dem
+
+RUN touch gen_dem/command.txt
+
+RUN touch gen_dem/results.txt
+
+# # # Run app.py when the container launches
+CMD ["python", "./reedata/getREEdata.py"]

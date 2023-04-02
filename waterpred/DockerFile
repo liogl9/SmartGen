@@ -1,20 +1,32 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9-slim-buster
+FROM python:3.9-slim
 
-# Set the working directory to /app
+# RUN echo "hello world"
+
+# # Set the working directory to /app
 WORKDIR /waterpred
 
-# Copy the current directory contents into the container at /app
-COPY ./waterpred /waterpred
+# RUN pwd
+# # Copy the current directory contents into the container at /app
+COPY . ./waterpred
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+# # # Install any needed packages specified in requirements.txt
+RUN pip install --trusted-host pypi.python.org -r ./waterpred/requirements.txt
 
-# Make port 80 available to the world outside this container
-EXPOSE 82
+RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
-# Define environment variable
+# # # Define environment variable
 ENV NAME World
 
-# Run app.py when the container launches
-CMD ["python", "waterPrediction.py"]
+# Fill the database
+# RUN python ./waterpred/writeInfluxDB.py
+
+
+RUN mkdir water_cons
+
+RUN touch ./water_cons/command.txt
+
+RUN touch ./water_cons/results.txt
+
+# # # Run app.py when the container launches
+CMD ["python", "./waterpred/waterPrediction.py"]

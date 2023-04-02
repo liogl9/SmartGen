@@ -3,11 +3,12 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 import pandas as pd
 import os
 
+# Establecemos parámetros de acceso al contenedor
 bucket = "timeSeries"
 org = "TeamSocket"
-token = "KnozwwefZRA5450uPDbBfYNO75B16kSaPZ3do02a5AhrL6lK7wM1oq0myJ2AUhg2TO9IgaP17RrJIuNFu74WcQ=="
+token = "EbfvN-ykoux3uY8FKXN95dbamkNA39tLAnGtEse4Vuk62tcK0rv0-AQzWfHQkdFepQCD2nrwDP46uO7KRpEE3Q=="
 # Store the URL of your InfluxDB instance
-url = "http://localhost:8086"
+url = "http://172.18.0.2:8086"
 
 client = influxdb_client.InfluxDBClient(
     url=url,
@@ -24,7 +25,7 @@ client = influxdb_client.InfluxDBClient(
 
 with client as client:
     i = 0
-    for df in pd.read_csv(os.path.join(os.getcwd(), "InfluxDB", "ConsumoAgua.csv"), chunksize=1, index_col=False):
+    for df in pd.read_csv(os.path.join(os.getcwd(), "waterpred", "ConsumoAgua.csv"), chunksize=1, index_col=False):
         with client.write_api(write_options=SYNCHRONOUS) as write_api:
             try:
                 p = influxdb_client.Point("ConsumoAgua").tag(
