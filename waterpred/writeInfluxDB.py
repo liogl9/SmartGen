@@ -2,6 +2,12 @@ import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS
 import pandas as pd
 import os
+import datetime
+
+
+start_time = datetime.datetime.now()
+delta = datetime.timedelta(hours=1)
+current_time = start_time
 
 # Establecemos parámetros de acceso al contenedor
 bucket = "timeSeries"
@@ -29,8 +35,10 @@ with client as client:
         with client.write_api(write_options=SYNCHRONOUS) as write_api:
             try:
                 p = influxdb_client.Point("ConsumoAgua").tag(
-                    "location", df["location"][i]).field("m3", int(df["m3"])).time(int(df["timeStamp"]), write_precision=influxdb_client.WritePrecision.MS)
+                    "location", df["location"][i]).field("m3", int(df["m3"])).time(int(current_time.timestamp()*1000), write_precision=influxdb_client.WritePrecision.MS)
                 write_api.write(bucket=bucket, org=org, record=p)
                 i += 1
+                if i % 11 == 0 and i != 0:
+                    current_time -= delta
             except influxdb_client.InfluxDBError as e:
                 print(e)
